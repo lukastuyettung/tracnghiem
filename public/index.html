@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Game Trắc Nghiệm</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #74ebd5, #ACB6E5);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+      color: #333;
+    }
+    .container {
+      background: white;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+      width: 400px;
+      text-align: center;
+    }
+    h1 { margin-bottom: 20px; }
+    .question { font-size: 18px; margin-bottom: 20px; }
+    .answers button {
+      display: block;
+      width: 100%;
+      margin: 8px 0;
+      padding: 12px;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      background: #6a11cb;
+      color: white;
+      transition: 0.3s;
+    }
+    .answers button:hover {
+      background: #2575fc;
+    }
+    .score { margin-top: 20px; font-size: 18px; }
+    .leaderboard {
+      margin-top: 30px;
+      text-align: left;
+    }
+    .leaderboard h2 { font-size: 20px; }
+    .leaderboard ol { padding-left: 20px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🎮 Game Trắc Nghiệm 🎮</h1>
+    <div id="quiz"></div>
+    <div class="score" id="score"></div>
+    <div class="leaderboard">
+      <h2>Bảng xếp hạng</h2>
+      <ol id="leaderboard-list"></ol>
+    </div>
+  </div>
+
+  <script>
+    const questions = [
+      { q: "Thủ đô Việt Nam là gì?", answers: ["Hà Nội", "Sài Gòn", "Đà Nẵng"], correct: 0 },
+      { q: "2 + 2 bằng mấy?", answers: ["3", "4", "5"], correct: 1 },
+      { q: "Facebook được sáng lập năm nào?", answers: ["2004", "2010", "1999"], correct: 0 },
+      { q: "Sông dài nhất thế giới?", answers: ["Amazon", "Nile", "Mekong"], correct: 1 },
+      { q: "Tác giả của Truyện Kiều?", answers: ["Nguyễn Du", "Nguyễn Trãi", "Xuân Diệu"], correct: 0 },
+      { q: "Hành tinh gần Mặt Trời nhất?", answers: ["Sao Kim", "Sao Thủy", "Sao Hỏa"], correct: 1 },
+      { q: "Quốc gia đông dân nhất thế giới?", answers: ["Ấn Độ", "Trung Quốc", "Mỹ"], correct: 1 },
+      { q: "Bảng chữ cái tiếng Việt có bao nhiêu chữ cái?", answers: ["29", "30", "28"], correct: 0 },
+      { q: "JavaScript chạy chủ yếu ở đâu?", answers: ["Trình duyệt", "Photoshop", "Excel"], correct: 0 },
+      { q: "Ngày Quốc khánh Việt Nam?", answers: ["2/9", "30/4", "1/5"], correct: 0 }
+    ];
+
+    let currentQ = 0;
+    let score = 0;
+
+    function showQuestion() {
+      if (currentQ >= questions.length) {
+        endGame();
+        return;
+      }
+      const q = questions[currentQ];
+      let html = `<div class="question">${currentQ+1}. ${q.q}</div>`;
+      html += `<div class="answers">`;
+      q.answers.forEach((ans, i) => {
+        html += `<button onclick="checkAnswer(${i})">${ans}</button>`;
+      });
+      html += `</div>`;
+      document.getElementById("quiz").innerHTML = html;
+      document.getElementById("score").innerText = `Điểm hiện tại: ${score}`;
+    }
+
+    function checkAnswer(choice) {
+      if (choice === questions[currentQ].correct) {
+        score += 3;
+      } else {
+        score -= 1;
+      }
+      currentQ++;
+      showQuestion();
+    }
+
+    function endGame() {
+      document.getElementById("quiz").innerHTML = `<h3>🎉 Bạn đã hoàn thành! 🎉</h3><p>Tổng điểm: ${score}</p>`;
+      document.getElementById("score").innerText = "";
+
+      // Lưu điểm vào localStorage
+      const leaderboard = JSON.parse(localStorage.getItem("leaderboard") || "[]");
+      const playerName = prompt("Nhập tên của bạn để lưu điểm:");
+      leaderboard.push({ name: playerName || "Người chơi", score });
+      leaderboard.sort((a, b) => b.score - a.score);
+      localStorage.setItem("leaderboard", JSON.stringify(leaderboard));
+
+      showLeaderboard();
+    }
+
+    function showLeaderboard() {
+      const leaderboard = JSON.parse(localStorage.getItem("leaderboard") || "[]");
+      const list = document.getElementById("leaderboard-list");
+      list.innerHTML = "";
+      leaderboard.slice(0, 10).forEach(entry => {
+        const li = document.createElement("li");
+        li.innerText = `${entry.name}: ${entry.score} điểm`;
+        list.appendChild(li);
+      });
+    }
+
+    showQuestion();
+    showLeaderboard();
+  </script>
+</body>
+</html>
