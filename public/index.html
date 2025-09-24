@@ -54,12 +54,16 @@
       background-size: 400% 400%;
       animation: rainbow 12s ease infinite;
       box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-      max-width: 900px;
+      max-width: 1000px;
     }
     @keyframes rainbow {
       0%{background-position:0% 50%}
       50%{background-position:100% 50%}
       100%{background-position:0% 50%}
+    }
+    .side-img {
+      width: 250px;
+      height: auto;
     }
     .container {
       width: 500px;
@@ -135,6 +139,9 @@
   </header>
 
   <div class="game-wrapper">
+    <!-- ảnh bên trái -->
+    <img src="trai.png" alt="Trang trí trái" class="side-img">
+
     <div class="container">
       <!-- Khu chơi game -->
       <div id="game">
@@ -155,6 +162,9 @@
         <button class="retry-btn" onclick="startGame()">Chơi lại</button>
       </div>
     </div>
+
+    <!-- ảnh bên phải -->
+    <img src="phai.png" alt="Trang trí phải" class="side-img">
   </div>
 
   <script src="questions.js"></script>
@@ -169,7 +179,6 @@
       document.getElementById('feedback').innerText = '';
       currentIndex = 0;
       score = 0;
-      // random chọn 10 câu
       currentQuestions = questions.sort(() => 0.5 - Math.random()).slice(0, 10);
       showQuestion();
     }
