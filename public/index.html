@@ -6,187 +6,187 @@
   <style>
     body {
       font-family: Arial, sans-serif;
-      background: linear-gradient(135deg, #74ebd5, #ACB6E5);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
+      background: #f7f7f7;
       margin: 0;
-      color: #333;
-    }
-    .layout {
+      padding: 0;
       display: flex;
-      align-items: center;
       justify-content: center;
-      gap: 40px;
-    }
-    .chibi-side {
-      width: 250px;   /* luôn 250px chiều ngang */
-      height: auto;   /* tự động giữ tỉ lệ */
-      animation: float 3s ease-in-out infinite;
-    }
-    @keyframes float {
-      0%   { transform: translateY(0); }
-      50%  { transform: translateY(-10px); }
-      100% { transform: translateY(0); }
+      align-items: center;
+      height: 100vh;
     }
     .container {
-      background: white;
-      padding: 30px;
+      position: relative;
+      width: 800px;
+      background: #fff;
+      padding: 20px;
       border-radius: 12px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-      width: 420px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.2);
       text-align: center;
     }
-    h1 { margin-bottom: 20px; }
-    .question { font-size: 18px; margin-bottom: 20px; }
+    .question {
+      font-size: 20px;
+      margin-bottom: 15px;
+      font-weight: bold;
+    }
     .answers button {
       display: block;
       width: 100%;
       margin: 8px 0;
       padding: 12px;
-      border: none;
-      border-radius: 8px;
       font-size: 16px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
       cursor: pointer;
-      background: #6a11cb;
-      color: white;
-      transition: 0.3s;
+      transition: background 0.3s;
     }
-    .answers button:hover:not(.disabled) {
-      background: #2575fc;
+    .answers button:hover {
+      background: #e0e0e0;
     }
-    .answers button.correct { background: #4caf50 !important; }
-    .answers button.wrong { background: #f44336 !important; }
-    .answers button.disabled { pointer-events: none; opacity: 0.8; }
-    .explanation {
-      margin-top: 15px;
-      font-style: italic;
-      color: #444;
+    .feedback {
+      margin-top: 12px;
+      font-size: 16px;
+      font-weight: bold;
     }
-    .score { margin-top: 20px; font-size: 18px; }
-    .leaderboard {
-      margin-top: 30px;
-      text-align: left;
-    }
-    .leaderboard h2 { font-size: 20px; }
-    .leaderboard ol { padding-left: 20px; }
-    .next-btn, .restart-btn {
+    .next-btn, .retry-btn {
       margin-top: 20px;
       padding: 10px 20px;
       font-size: 16px;
       border: none;
       border-radius: 8px;
       cursor: pointer;
-      background: #ff9800;
+      background: #4CAF50;
       color: white;
-      transition: 0.3s;
     }
-    .next-btn:hover, .restart-btn:hover {
-      background: #e68900;
+    .retry-btn { background: #2196F3; }
+
+    .leaderboard {
+      margin-top: 20px;
+      text-align: left;
     }
+    .leaderboard h3 {
+      margin-bottom: 10px;
+    }
+    .leaderboard ol {
+      padding-left: 20px;
+    }
+
+    /* Ảnh chibi 2 bên */
+    .side-img {
+      position: absolute;
+      top: 20px;
+      width: 250px;
+      height: auto;
+    }
+    .left-img { left: -270px; }
+    .right-img { right: -270px; }
   </style>
 </head>
 <body>
-  <div class="layout">
-    <!-- Ảnh chibi bên trái -->
-    <img src="/images/trai.png" alt="Chibi trái" class="chibi-side">
+  <div class="container">
+    <img src="trai.png" alt="Left decoration" class="side-img left-img">
+    <img src="phai.png" alt="Right decoration" class="side-img right-img">
 
-    <!-- Khu vực game -->
-    <div class="container">
-      <h1>🎮 Game Trắc Nghiệm 🎮</h1>
-      <div id="quiz"></div>
-      <div class="score" id="score"></div>
-      <div class="leaderboard">
-        <h2>Bảng xếp hạng</h2>
-        <ol id="leaderboard-list"></ol>
-      </div>
+    <div id="game">
+      <div class="question" id="question"></div>
+      <div class="answers" id="answers"></div>
+      <div class="feedback" id="feedback"></div>
+      <button class="next-btn" id="nextBtn" style="display:none;">Tiếp</button>
     </div>
 
-    <!-- Ảnh chibi bên phải -->
-    <img src="/images/phai.png" alt="Chibi phải" class="chibi-side">
+    <div id="result" style="display:none;">
+      <h2>Kết thúc!</h2>
+      <p id="score"></p>
+      <div class="leaderboard">
+        <h3>Bảng xếp hạng</h3>
+        <ol id="leaderboardList"></ol>
+      </div>
+      <button class="retry-btn" onclick="startGame()">Chơi lại</button>
+    </div>
   </div>
 
- <script src="questions.js"></script>
-<script>
-  
-    let currentQ = 0;
+  <!-- Import câu hỏi -->
+  <script src="questions.js"></script>
+  <script>
+    let currentQuestions = [];
+    let currentIndex = 0;
     let score = 0;
 
-    function showQuestion() {
-      if (currentQ >= questions.length) {
-        endGame();
-        return;
-      }
-      const q = questions[currentQ];
-      let html = `<div class="question">${currentQ+1}. ${q.q}</div>`;
-      html += `<div class="answers">`;
-      q.answers.forEach((ans, i) => {
-        html += `<button onclick="checkAnswer(${i})" id="btn${i}">${ans}</button>`;
-      });
-      html += `</div><div class="explanation" id="explain"></div><div id="nextArea"></div>`;
-      document.getElementById("quiz").innerHTML = html;
-      document.getElementById("score").innerText = `Điểm hiện tại: ${score}`;
+    function startGame() {
+      document.getElementById('result').style.display = 'none';
+      document.getElementById('game').style.display = 'block';
+      document.getElementById('feedback').innerText = '';
+      currentIndex = 0;
+      score = 0;
+
+      // chọn ngẫu nhiên 10 câu trong list
+      currentQuestions = questions.sort(() => 0.5 - Math.random()).slice(0, 10);
+      showQuestion();
     }
 
-    function checkAnswer(choice) {
-      const q = questions[currentQ];
-      const buttons = document.querySelectorAll(".answers button");
-
-      buttons.forEach((btn, i) => {
-        btn.classList.add("disabled");
-        if (i === q.correct) btn.classList.add("correct");
-        if (i === choice && i !== q.correct) btn.classList.add("wrong");
+    function showQuestion() {
+      const q = currentQuestions[currentIndex];
+      document.getElementById('question').innerText = q.q;
+      const answersDiv = document.getElementById('answers');
+      answersDiv.innerHTML = '';
+      q.answers.forEach((ans, i) => {
+        const btn = document.createElement('button');
+        btn.innerText = ans;
+        btn.onclick = () => selectAnswer(i);
+        answersDiv.appendChild(btn);
       });
+      document.getElementById('feedback').innerText = '';
+      document.getElementById('nextBtn').style.display = 'none';
+    }
 
-      if (choice === q.correct) {
+    function selectAnswer(i) {
+      const q = currentQuestions[currentIndex];
+      const feedback = document.getElementById('feedback');
+      if (i === q.correct) {
         score += 3;
-        document.getElementById("explain").innerText = "✅ Đúng rồi! " + q.explain;
+        feedback.innerText = "✅ Đúng! " + q.explain;
+        feedback.style.color = "green";
       } else {
         score -= 1;
-        document.getElementById("explain").innerText = "❌ Sai mất rồi! " + q.explain;
+        feedback.innerText = "❌ Sai! " + q.explain;
+        feedback.style.color = "red";
       }
-
-      document.getElementById("nextArea").innerHTML = `<button class="next-btn" onclick="nextQuestion()">Tiếp</button>`;
+      // disable buttons
+      Array.from(document.querySelectorAll('#answers button')).forEach(b => b.disabled = true);
+      document.getElementById('nextBtn').style.display = 'inline-block';
     }
 
-    function nextQuestion() {
-      currentQ++;
-      showQuestion();
-    }
+    document.getElementById('nextBtn').onclick = () => {
+      currentIndex++;
+      if (currentIndex < currentQuestions.length) {
+        showQuestion();
+      } else {
+        endGame();
+      }
+    };
 
     function endGame() {
-      document.getElementById("quiz").innerHTML = `<h3>🎉 Bạn đã hoàn thành! 🎉</h3><p>Tổng điểm: ${score}</p><button class="restart-btn" onclick="restartGame()">Chơi lại</button>`;
-      document.getElementById("score").innerText = "";
+      document.getElementById('game').style.display = 'none';
+      document.getElementById('result').style.display = 'block';
+      document.getElementById('score').innerText = "Điểm của bạn: " + score;
 
-      const leaderboard = JSON.parse(localStorage.getItem("leaderboard") || "[]");
-      const playerName = prompt("Nhập tên của bạn để lưu điểm:");
-      leaderboard.push({ name: playerName || "Người chơi", score });
-      leaderboard.sort((a, b) => b.score - a.score);
-      localStorage.setItem("leaderboard", JSON.stringify(leaderboard));
+      // Lưu vào leaderboard
+      let leaderboard = JSON.parse(localStorage.getItem('leaderboard') || "[]");
+      leaderboard.push(score);
+      leaderboard.sort((a,b) => b-a);
+      leaderboard = leaderboard.slice(0, 10);
+      localStorage.setItem('leaderboard', JSON.stringify(leaderboard));
 
-      showLeaderboard();
-    }
-
-    function restartGame() {
-      currentQ = 0;
-      score = 0;
-      showQuestion();
-    }
-
-    function showLeaderboard() {
-      const leaderboard = JSON.parse(localStorage.getItem("leaderboard") || "[]");
-      const list = document.getElementById("leaderboard-list");
-      list.innerHTML = "";
-      leaderboard.slice(0, 10).forEach(entry => {
-        const li = document.createElement("li");
-        li.innerText = `${entry.name}: ${entry.score} điểm`;
+      const list = document.getElementById('leaderboardList');
+      list.innerHTML = '';
+      leaderboard.forEach((s, i) => {
+        const li = document.createElement('li');
+        li.innerText = s + " điểm";
         list.appendChild(li);
       });
     }
 
-    showQuestion();
-    showLeaderboard();
+    // bắt đầu game lần đầu
+    startGame();
   </script>
 </body>
 </html>
