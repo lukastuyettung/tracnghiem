@@ -14,6 +14,22 @@
       margin: 0;
       color: #333;
     }
+    .layout {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 40px;
+    }
+    .chibi-side {
+      width: 250px;   /* luôn 250px chiều ngang */
+      height: auto;   /* tự động giữ tỉ lệ */
+      animation: float 3s ease-in-out infinite;
+    }
+    @keyframes float {
+      0%   { transform: translateY(0); }
+      50%  { transform: translateY(-10px); }
+      100% { transform: translateY(0); }
+    }
     .container {
       background: white;
       padding: 30px;
@@ -68,111 +84,3 @@
     }
     .next-btn:hover, .restart-btn:hover {
       background: #e68900;
-    }
-  </style>
-</head>
-<body>
-  <div class="container">
-    <h1>🎮 Game Trắc Nghiệm 🎮</h1>
-    <div id="quiz"></div>
-    <div class="score" id="score"></div>
-    <div class="leaderboard">
-      <h2>Bảng xếp hạng</h2>
-      <ol id="leaderboard-list"></ol>
-    </div>
-  </div>
-
-  <script>
-    const questions = [
-      { q: "Thủ đô Việt Nam là gì?", answers: ["Hà Nội", "Sài Gòn", "Đà Nẵng"], correct: 0, explain: "Thủ đô Việt Nam là Hà Nội." },
-      { q: "2 + 2 bằng mấy?", answers: ["3", "4", "5"], correct: 1, explain: "2 + 2 = 4." },
-      { q: "Facebook được sáng lập năm nào?", answers: ["2004", "2010", "1999"], correct: 0, explain: "Mark Zuckerberg sáng lập Facebook năm 2004." },
-      { q: "Sông dài nhất thế giới?", answers: ["Amazon", "Nile", "Mekong"], correct: 1, explain: "Sông Nile được coi là dài nhất thế giới." },
-      { q: "Tác giả của Truyện Kiều?", answers: ["Nguyễn Du", "Nguyễn Trãi", "Xuân Diệu"], correct: 0, explain: "Nguyễn Du là tác giả Truyện Kiều." },
-      { q: "Hành tinh gần Mặt Trời nhất?", answers: ["Sao Kim", "Sao Thủy", "Sao Hỏa"], correct: 1, explain: "Sao Thủy nằm gần Mặt Trời nhất." },
-      { q: "Quốc gia đông dân nhất thế giới?", answers: ["Ấn Độ", "Trung Quốc", "Mỹ"], correct: 1, explain: "Trung Quốc hiện có dân số lớn nhất." },
-      { q: "Bảng chữ cái tiếng Việt có bao nhiêu chữ cái?", answers: ["29", "30", "28"], correct: 0, explain: "Tiếng Việt có 29 chữ cái." },
-      { q: "JavaScript chạy chủ yếu ở đâu?", answers: ["Trình duyệt", "Photoshop", "Excel"], correct: 0, explain: "JavaScript chủ yếu chạy trong trình duyệt." },
-      { q: "Ngày Quốc khánh Việt Nam?", answers: ["2/9", "30/4", "1/5"], correct: 0, explain: "Quốc khánh Việt Nam là ngày 2/9." }
-    ];
-
-    let currentQ = 0;
-    let score = 0;
-
-    function showQuestion() {
-      if (currentQ >= questions.length) {
-        endGame();
-        return;
-      }
-      const q = questions[currentQ];
-      let html = `<div class="question">${currentQ+1}. ${q.q}</div>`;
-      html += `<div class="answers">`;
-      q.answers.forEach((ans, i) => {
-        html += `<button onclick="checkAnswer(${i})" id="btn${i}">${ans}</button>`;
-      });
-      html += `</div><div class="explanation" id="explain"></div><div id="nextArea"></div>`;
-      document.getElementById("quiz").innerHTML = html;
-      document.getElementById("score").innerText = `Điểm hiện tại: ${score}`;
-    }
-
-    function checkAnswer(choice) {
-      const q = questions[currentQ];
-      const buttons = document.querySelectorAll(".answers button");
-
-      buttons.forEach((btn, i) => {
-        btn.classList.add("disabled");
-        if (i === q.correct) btn.classList.add("correct");
-        if (i === choice && i !== q.correct) btn.classList.add("wrong");
-      });
-
-      if (choice === q.correct) {
-        score += 3;
-        document.getElementById("explain").innerText = "✅ Đúng rồi! " + q.explain;
-      } else {
-        score -= 1;
-        document.getElementById("explain").innerText = "❌ Sai mất rồi! " + q.explain;
-      }
-
-      document.getElementById("nextArea").innerHTML = `<button class="next-btn" onclick="nextQuestion()">Tiếp</button>`;
-    }
-
-    function nextQuestion() {
-      currentQ++;
-      showQuestion();
-    }
-
-    function endGame() {
-      document.getElementById("quiz").innerHTML = `<h3>🎉 Bạn đã hoàn thành! 🎉</h3><p>Tổng điểm: ${score}</p><button class="restart-btn" onclick="restartGame()">Chơi lại</button>`;
-      document.getElementById("score").innerText = "";
-
-      const leaderboard = JSON.parse(localStorage.getItem("leaderboard") || "[]");
-      const playerName = prompt("Nhập tên của bạn để lưu điểm:");
-      leaderboard.push({ name: playerName || "Người chơi", score });
-      leaderboard.sort((a, b) => b.score - a.score);
-      localStorage.setItem("leaderboard", JSON.stringify(leaderboard));
-
-      showLeaderboard();
-    }
-
-    function restartGame() {
-      currentQ = 0;
-      score = 0;
-      showQuestion();
-    }
-
-    function showLeaderboard() {
-      const leaderboard = JSON.parse(localStorage.getItem("leaderboard") || "[]");
-      const list = document.getElementById("leaderboard-list");
-      list.innerHTML = "";
-      leaderboard.slice(0, 10).forEach(entry => {
-        const li = document.createElement("li");
-        li.innerText = `${entry.name}: ${entry.score} điểm`;
-        list.appendChild(li);
-      });
-    }
-
-    showQuestion();
-    showLeaderboard();
-  </script>
-</body>
-</html>
