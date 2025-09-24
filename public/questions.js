@@ -51,7 +51,7 @@ const questions = [
   { q: "Ai là tác giả 'Nhật ký Đặng Thùy Trâm'?", answers: ["Đặng Thùy Trâm", "Nguyễn Văn Thạc", "Nguyễn Đình Thi"], correct: 0, explain: "Nhật ký Đặng Thùy Trâm do chính chị viết." },
   { q: "Ai là tác giả 'Chiếc lược ngà'?", answers: ["Nguyễn Quang Sáng", "Nguyễn Minh Châu", "Nguyễn Tuân"], correct: 0, explain: "Chiếc lược ngà là tác phẩm của Nguyễn Quang Sáng." },
   { q: "Ai là tác giả 'Vợ chồng A Phủ'?", answers: ["Tô Hoài", "Ngô Tất Tố", "Nguyễn Công Hoan"], correct: 0, explain: "Vợ chồng A Phủ là truyện của Tô Hoài." },
-  { q: "Ai là tác giả 'Đất rừng phương Nam'?", answers: ["Đoàn Giỏi", "Nguyễn Nhật Ánh", "Nam Cao"], correct: 0, explain: "Đất rừng phương Nam do Đoàn Giỏi viết." }
+  { q: "Ai là tác giả 'Đất rừng phương Nam'?", answers: ["Đoàn Giỏi", "Nguyễn Nhật Ánh", "Nam Cao"], correct: 0, explain: "Đất rừng phương Nam do Đoàn Giỏi viết." },
 // ==== Khoa học tự nhiên (51–75) ====
 { q: "Nguyên tố O trong bảng tuần hoàn là gì?", answers: ["Oxy", "Vàng", "Đồng"], correct: 0, explain: "O là ký hiệu của Oxy." },
 { q: "Nhiệt độ tuyệt đối 0 Kelvin tương đương bao nhiêu °C?", answers: ["-273°C", "0°C", "-100°C"], correct: 0, explain: "0 Kelvin tương đương -273°C." },
@@ -105,7 +105,7 @@ const questions = [
 { q: "Ngôn ngữ Python được đặt theo tên gì?", answers: ["Monty Python", "Con trăn", "Nhà toán học"], correct: 0, explain: "Python đặt tên theo nhóm hài Monty Python." },
 { q: "Phần mềm Photoshop thuộc công ty nào?", answers: ["Adobe", "Microsoft", "Apple"], correct: 0, explain: "Photoshop là sản phẩm của Adobe." },
 { q: "Windows 95 ra đời năm nào?", answers: ["1995", "2000", "1990"], correct: 0, explain: "Windows 95 phát hành năm 1995." },
-{ q: "Công ty nào phát triển hệ điều hành MacOS?", answers: ["Apple", "IBM", "Google"], correct: 0, explain: "MacOS được Apple phát triển." }
+{ q: "Công ty nào phát triển hệ điều hành MacOS?", answers: ["Apple", "IBM", "Google"], correct: 0, explain: "MacOS được Apple phát triển." },
 // ==== Âm nhạc & Điện ảnh (101–125) ====
 { q: "Phim Titanic công chiếu năm nào?", answers: ["1997", "2000", "1990"], correct: 0, explain: "Titanic công chiếu năm 1997, do James Cameron đạo diễn." },
 { q: "Ca sĩ nào được mệnh danh là Ông hoàng nhạc Pop?", answers: ["Michael Jackson", "Elvis Presley", "Freddie Mercury"], correct: 0, explain: "Michael Jackson được mệnh danh là Ông hoàng nhạc Pop." },
@@ -159,7 +159,7 @@ const questions = [
 { q: "Cầu thủ nào có biệt danh 'King of Dribble'?", answers: ["Ronaldinho", "Messi", "Cristiano Ronaldo"], correct: 0, explain: "Ronaldinho nổi tiếng với kỹ năng rê bóng." },
 { q: "Môn thể thao nào dùng thuyền chèo?", answers: ["Rowing", "Sailing", "Kayak"], correct: 0, explain: "Rowing là môn thể thao dùng thuyền chèo." },
 { q: "Môn thể thao nào phổ biến ở Canada?", answers: ["Khúc côn cầu trên băng", "Bóng chày", "Bóng đá"], correct: 0, explain: "Khúc côn cầu trên băng là môn thể thao quốc gia Canada." },
-{ q: "Ai là vận động viên bơi lội nổi tiếng với 23 HCV Olympic?", answers: ["Michael Phelps", "Ian Thorpe", "Mark Spitz"], correct: 0, explain: "Michael Phelps có 23 HCV Olympic." }
+{ q: "Ai là vận động viên bơi lội nổi tiếng với 23 HCV Olympic?", answers: ["Michael Phelps", "Ian Thorpe", "Mark Spitz"], correct: 0, explain: "Michael Phelps có 23 HCV Olympic." },
 // ==== Bổ sung tổng hợp (151–200) ====
 
 // Lịch sử & Địa lý
@@ -238,6 +238,6 @@ const questions = [
 { q: "Quốc gia nào nổi tiếng với võ Muay Thai?", answers: ["Thái Lan", "Trung Quốc", "Nhật Bản"], correct: 0, explain: "Muay Thai là môn võ truyền thống Thái Lan." },
 { q: "Môn võ Taekwondo có nguồn gốc từ đâu?", answers: ["Hàn Quốc", "Nhật Bản", "Trung Quốc"], correct: 0, explain: "Taekwondo có nguồn gốc từ Hàn Quốc." },
 { q: "Việt Nam lần thứ hai vô địch AFF Cup năm nào?", answers: ["2018", "2010", "2014"], correct: 0, explain: "Việt Nam lần thứ hai vô địch AFF Cup năm 2018." },
-{ q: "Ai là cầu thủ Việt Nam ghi bàn thắng vào lưới Olympic Hàn Quốc 2018?", answers: ["Nguyễn Văn Toàn", "Nguyễn Quang Hải", "Công Phượng"], correct: 1, explain: "Quang Hải là cầu thủ ghi bàn thắng đẹp mắt vào lưới Hàn Quốc." }
+{ q: "Ai là cầu thủ Việt Nam ghi bàn thắng vào lưới Olympic Hàn Quốc 2018?", answers: ["Nguyễn Văn Toàn", "Nguyễn Quang Hải", "Công Phượng"], correct: 1, explain: "Quang Hải là cầu thủ ghi bàn thắng đẹp mắt vào lưới Hàn Quốc." },
 ];
 
