@@ -11,18 +11,6 @@ const questions = [
   { q: "Cuộc khởi nghĩa Yên Bái (1930) do tổ chức nào lãnh đạo?", answers: ["Tân Việt Cách mạng Đảng", "Việt Nam Quốc dân Đảng", "Đảng Cộng sản Đông Dương"], correct: 1, explain: "Khởi nghĩa Yên Bái do tổ chức Việt Nam Quốc dân Đảng khởi xướng và lãnh đạo." },
   { q: "Sau khi dẹp loạn 12 sứ quân, Đinh Bộ Lĩnh lên ngôi và xưng là gì?", answers: ["Đinh Kiến", "Đinh Phế Đế", "Đinh Tiên Hoàng"], correct: 2, explain: "Đinh Bộ Lĩnh lên ngôi Hoàng đế năm 968, tự xưng là Đinh Tiên Hoàng." },
 
-  // ==== Địa lý Việt Nam ====
-  { q: "Đỉnh núi nào được mệnh danh là cao thứ hai ở Việt Nam sau Fansipan?", answers: ["Bạch Mã", "Pu Ta Leng", "Mẫu Sơn"], correct: 1, explain: "Đỉnh Pu Ta Leng (Lai Châu) cao 3.049m, là ngọn núi cao thứ hai của nước ta." },
-  { q: "Tỉnh nào hiện có diện tích tự nhiên lớn nhất Việt Nam?", answers: ["Nghệ An", "Gia Lai", "Đắk Lắk"], correct: 0, explain: "Nghệ An là tỉnh có diện tích lớn nhất cả nước với hơn 16.400 km2." },
-  { q: "Hồ nước ngọt tự nhiên lớn nhất Việt Nam nằm ở tỉnh nào?", answers: ["Hà Nội (Hồ Tây)", "Bắc Kạn (Hồ Ba Bể)", "Gia Lai (Hồ Tơ Nưng)"], correct: 1, explain: "Hồ Ba Bể ở Bắc Kạn là hồ nước ngọt tự nhiên lớn nhất Việt Nam." },
-  { q: "Di sản thiên nhiên thế giới Vịnh Hạ Long thuộc địa phận tỉnh nào?", answers: ["Hải Phòng", "Thái Bình", "Quảng Ninh"], correct: 2, explain: "Vịnh Hạ Long nằm ở bờ tây vịnh Bắc Bộ, thuộc tỉnh Quảng Ninh." },
-  { q: "Hòn đảo lớn nhất của Việt Nam là đảo nào?", answers: ["Phú Quốc", "Cát Bà", "Côn Đảo"], correct: 0, explain: "Phú Quốc (Kiên Giang) được mệnh danh là Đảo Ngọc, là hòn đảo lớn nhất Việt Nam." },
-  { q: "Cao nguyên đá Đồng Văn - Công viên địa chất toàn cầu nằm ở tỉnh nào?", answers: ["Cao Bằng", "Hà Giang", "Lạng Sơn"], correct: 1, explain: "Cao nguyên đá Đồng Văn là một vùng núi đá vôi đặc biệt nằm ở tỉnh Hà Giang." },
-  { q: "Đèo Hải Vân là ranh giới tự nhiên giữa hai địa phương nào?", answers: ["Quảng Trị và Thừa Thiên Huế", "Đà Nẵng và Quảng Nam", "Thừa Thiên Huế và Đà Nẵng"], correct: 2, explain: "Đèo Hải Vân cắt ngang dãy Bạch Mã, nối liền Thừa Thiên Huế và Đà Nẵng." },
-  { q: "Tỉnh duy nhất ở khu vực Tây Nguyên không có đường biên giới quốc tế là?", answers: ["Lâm Đồng", "Đắk Lắk", "Kon Tum"], correct: 0, explain: "Lâm Đồng là tỉnh duy nhất của Tây Nguyên nằm sâu trong nội địa, không giáp biên giới." },
-  { q: "Hang động tự nhiên nào ở Việt Nam được công nhận là lớn nhất thế giới?", answers: ["Động Phong Nha", "Hang Sơn Đoòng", "Động Thiên Đường"], correct: 1, explain: "Hang Sơn Đoòng (Quảng Bình) hiện giữ kỷ lục là hang động tự nhiên lớn nhất thế giới." },
-  { q: "Vườn quốc gia Cát Tiên trải dài trên địa bàn của bao nhiêu tỉnh?", answers: ["2 tỉnh", "4 tỉnh", "3 tỉnh"], correct: 2, explain: "Vườn quốc gia Cát Tiên nằm trên địa bàn 3 tỉnh: Đồng Nai, Lâm Đồng và Bình Phước." },
-
   // ==== Văn học Việt Nam ====
   { q: "Ai là tác giả của bài thơ 'Bánh trôi nước'?", answers: ["Hồ Xuân Hương", "Bà Huyện Thanh Quan", "Đoàn Thị Điểm"], correct: 0, explain: "Hồ Xuân Hương, được mệnh danh là 'Bà chúa thơ Nôm', là tác giả của bài thơ này." },
   { q: "Trong tác phẩm 'Tắt đèn' của Ngô Tất Tố, nhân vật chị Dậu có tên thật là gì?", answers: ["Nguyễn Thị Dậu", "Lê Thị Pha", "Trần Thị Mịch"], correct: 1, explain: "Chị Dậu trong tác phẩm 'Tắt đèn' có tên thật là Lê Thị Pha." },
